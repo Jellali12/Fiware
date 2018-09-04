@@ -1,25 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2015 Thomas Telkamp and Matthijs Kooijman
- *
- * Permission is hereby granted, free of charge, to anyone
- * obtaining a copy of this document and accompanying files,
- * to do whatever they want with them without any restriction,
- * including, but not limited to, copying, modification and redistribution.
- * NO WARRANTY OF ANY KIND IS PROVIDED.
- *
- * This example sends a valid LoRaWAN packet with payload "Hello,
- * world!", using frequency and encryption settings matching those of
- * the (early prototype version of) The Things Network.
- *
- * Note: LoRaWAN per sub-band duty-cycle limitation is enforced (1% in g1,
- *  0.1% in g2).
- *
- * Change DEVADDR to a unique address!
- * See http://thethingsnetwork.org/wiki/AddressSpace
- *
- * Do not forget to define the radio type correctly in config.h.
- *
- *******************************************************************************/
 
 #include <lmic.h>
 #include <hal/hal.h>
@@ -30,17 +8,14 @@
 CayenneLPP lpp(51);
 
 // LoRaWAN NwkSKey, network session key
-// This is the default Semtech key, which is used by the prototype TTN
 // network initially.
 static const PROGMEM u1_t NWKSKEY[16] = { 0x45, 0x62,0xe5, 0xbd, 0xaf, 0x9c, 0x69, 0xe8,0xb1, 0x5c, 0xdd, 0x44, 0x52, 0x2a, 0x9e, 0x33 };
 
 // LoRaWAN AppSKey, application session key
-// This is the default Semtech key, which is used by the prototype TTN
 // network initially.
 static const u1_t PROGMEM APPSKEY[16] = { 0x6b, 0x60, 0x95, 0xf0, 0x94, 0x7c, 0xb3, 0x24, 0x53, 0x69, 0x74, 0xce, 0x54, 0xda, 0xd4, 0xca };
 
 // LoRaWAN end-device address (DevAddr)
-// See http://thethingsnetwork.org/wiki/AddressSpace
 static const u4_t DEVADDR = 0x00b0f71c ; // <-- Change this address for every node!
 
 // These callbacks are only used in over-the-air activation, so they are
