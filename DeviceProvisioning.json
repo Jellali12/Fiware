@@ -4,7 +4,6 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
     "device_id": "iot",
     "entity_name": "IOT",
     "entity_type": "LoraDevice",
-    "timezone": "America/Santiago",
     "attributes": [
 
       {
