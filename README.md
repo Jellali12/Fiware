@@ -210,6 +210,17 @@ docker-compose -f docker/docker-compose.yml up
 
 The following figure presents the docker-compose.yml file with which we can run all the dockers containing fiware’s components with a single command:
 
+![doker-compose1](https://user-images.githubusercontent.com/42373973/45123462-43ad9f80-b167-11e8-8a6a-5540c3d2a7a4.png)
+![doker-compose2](https://user-images.githubusercontent.com/42373973/45123640-da7a5c00-b167-11e8-944c-edba7d381227.png)
+
+This docker-compose.yml file tells Docker to do the following:
+
+•	Pull the image mongodb from mongo 3.2, the image orion from fiware/orion:latest and the image iotagent-lora from ioeari/iotagent-lora.\
+•	Immediately restart containers if one fails.\
+•	Map port 1026 on the host to web’s port 1026.\
+•	Map port 4061 on the host to web’s port 4061.
+
+
 
 ### The application server’s web interface
 LoRa application server comes with a user-web-interface that enables the management of the different components of the network and that allows the decoding and the visualization of the received data. The following steps lead to the configuration of this interface.
