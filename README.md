@@ -59,9 +59,9 @@ Creating a user, database and a PostgreSQL pqtrgm extension After starting the p
 ### Installing the Application Server
 sudo apt-get install lora-app-server\
 After installation, modify the configuration file which is located at /etc/lora-app-server/loraapp-server.toml
-![image](https://user-images.githubusercontent.com/40475940/45075541-58465500-b0df-11e8-8ea1-e66ab24ee17c.png)
+![image](https://user-images.githubusercontent.com/40475940/45075541-58465500-b0df-11e8-8ea1-e66ab24ee17c.png)\
 Given that the password that I used when creating the PostgreSQL database is ’dbpassword’, the config variable postgresql.dsn had to be changed into:\
- ![image](https://user-images.githubusercontent.com/40475940/45075556-62685380-b0df-11e8-89ac-cdb7233a2713.png)
+ ![image](https://user-images.githubusercontent.com/40475940/45075556-62685380-b0df-11e8-89ac-cdb7233a2713.png)\
 Another thing that has to be changed in the name of the node in the uplink topic subsciption. In pour case the node is called 'node' so the code in the configuration file has to look like the screenshot below\
  
 ![image](https://user-images.githubusercontent.com/40475940/45075613-9a6f9680-b0df-11e8-922a-f68276c667a7.png)
@@ -77,7 +77,7 @@ LoRa application server comes with a user-web-interface that enables the managem
 3.	Launching the loRa network server
  ![image](https://user-images.githubusercontent.com/40475940/45075651-b96e2880-b0df-11e8-84d7-f0e7f515852b.png)
 
-4.	Launching LoRa application server 
+4.	Launching LoRa application server \
 ![image](https://user-images.githubusercontent.com/40475940/45075660-c428bd80-b0df-11e8-8d71-d42141ab525f.png)
 
 5.	Access the configured bind address, in our case it’s: https://52.211.159.35:8080
@@ -85,24 +85,35 @@ LoRa application server comes with a user-web-interface that enables the managem
 
 6.	In there, the used gateway’s as well as the device’s information have to be provided, respectively in the ’gateway profiles’ and ’device profiles’ sections showed in the figure above. The used network server with which the application server will deal must be entered in the ’network servers’ section. And in the ’Applications’ section, an application using the mentioned gateway and devices can be made. In the application we can choose to decode using a self developed javascript code or using CayenneLPP schema. In our case the latter one was chosen.
 ## Device provisioning and data’s circulation visualization
-1.	Launching the packet forwarder
+1.	Launching the packet forwarder\
+![image](https://user-images.githubusercontent.com/40475940/45075779-2681be00-b0e0-11e8-957e-5156ca38856f.png) \
 
-And here are the values that are being sent by the node
- 
-2.	Encoded data will be then forwarded to the gateway bridge
-3.	In the application server’s interface, we can visualize frames that are being received by the gateway
+And here are the values that are being sent by the node\
+ ![image](https://user-images.githubusercontent.com/40475940/45075797-36010700-b0e0-11e8-8ca3-761139ec500c.png)
+
+2.	Encoded data will be then forwarded to the gateway bridge\
+![image](https://user-images.githubusercontent.com/40475940/45075813-40230580-b0e0-11e8-9ddb-e83fe50a05ae.png)
+
+3.	In the application server’s interface, we can visualize frames that are being received by the gateway\
+![image](https://user-images.githubusercontent.com/40475940/45075856-58932000-b0e0-11e8-91ba-69f091aaabc6.png)
+
 4.	Device provisioning: for the data to be forwarded to fiware’s IoT agent through an MQTT broker, the device has to be provisioned and that is by: entering the attributes which, in our case, are ’temperature’ and ’humidity’ as well as providing loraserver’s information, the device’s eui, application eui, id , key and the data model which is Cayennelpp.\
- 
+ ![image](https://user-images.githubusercontent.com/40475940/45075865-621c8800-b0e0-11e8-98b7-011fbf402e1c.png)\
+
 In the next figure, is the IoT agent processing the provisioning, connecting to the MQTT broker, starting the application and then subscribing to the application’s topic\
- 
+ ![image](https://user-images.githubusercontent.com/40475940/45075891-6fd20d80-b0e0-11e8-84b9-5b523ae94c08.png)\
+
 In the figure below, the received and decoded data in the application server is shown\
+ ![image](https://user-images.githubusercontent.com/40475940/45075907-7ceefc80-b0e0-11e8-82ab-66aead4702f9.png)\
  
 In the following figure, data that has been forwarded to the IoT agent is shown\
+![image](https://user-images.githubusercontent.com/40475940/45075928-89735500-b0e0-11e8-983d-e452b3452483.png)\
 
 
 
-And below, is data stored in to context broker’s database after being translated to
-NGSI by the IoT agent
+And below, is data stored in to context broker’s database after being translated to NGSI by the IoT agent\
+![image](https://user-images.githubusercontent.com/40475940/45075935-942dea00-b0e0-11e8-81a8-e1613486f5a7.png)
+
  
 
 
