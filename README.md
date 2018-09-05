@@ -60,5 +60,48 @@ Creating a user, database and a PostgreSQL pqtrgm extension After starting the p
 sudo apt-get install lora-app-server\
 After installation, modify the configuration file which is located at /etc/lora-app-server/loraapp-server.toml
 
+Given that the password that I used when creating the PostgreSQL database is ’dbpassword’, the config variable postgresql.dsn had to be changed into:\
+ 
+Another thing that has to be changed in the name of the node in the uplink topic subsciption. In pour case the node is called 'node' so the code in the configuration file has to look like the screenshot below\
+ 
+
+
+### The application server’s web interface
+LoRa application server comes with a user-web-interface that enables the management of the different components of the network and that allows the decoding and the visualization of the received data. The following steps lead to the configuration of this interface.
+1. Configuring the bind address TLS certificates and the authentication key
+ 
+
+2. Launching the gateway bridge
+ 
+3.	Launching the loRa network server
+ 
+4.	Launching LoRa application server 
+
+5.	Access the configured bind address, in our case it’s: https://52.211.159.35:8080
+ 
+6.	In there, the used gateway’s as well as the device’s information have to be provided, respectively in the ’gateway profiles’ and ’device profiles’ sections showed in the figure above. The used network server with which the application server will deal must be entered in the ’network servers’ section. And in the ’Applications’ section, an application using the mentioned gateway and devices can be made. In the application we can choose to decode using a self developed javascript code or using CayenneLPP schema. In our case the latter one was chosen.
+## Device provisioning and data’s circulation visualization
+1.	Launching the packet forwarder
+
+And here are the values that are being sent by the node
+ 
+2.	Encoded data will be then forwarded to the gateway bridge
+3.	In the application server’s interface, we can visualize frames that are being received by the gateway
+4.	Device provisioning: for the data to be forwarded to fiware’s IoT agent through an MQTT broker, the device has to be provisioned and that is by: entering the attributes which, in our case, are ’temperature’ and ’humidity’ as well as providing loraserver’s information, the device’s eui, application eui, id , key and the data model which is Cayennelpp.\
+ 
+In the next figure, is the IoT agent processing the provisioning, connecting to the MQTT broker, starting the application and then subscribing to the application’s topic\
+ 
+In the figure below, the received and decoded data in the application server is shown\
+ 
+In the following figure, data that has been forwarded to the IoT agent is shown\
+
+
+
+And below, is data stored in to context broker’s database after being translated to
+NGSI by the IoT agent
+ 
+
+
+
 
 
