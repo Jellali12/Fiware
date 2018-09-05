@@ -28,6 +28,37 @@
   $ make .
   $ ./single_chan_pkt_fwd .
 
-  
+  # Loraserver's implementation
+  ## LoRa gateway bridge
+### Requirements
+•	Mosquitto MQTT broker: In order to install it, I executed the following command: sudo apt-get install mosquitto\
+•	PostgreSQL database: LoRa Server persists the gateway data into a PostgreSQL database. To install the latest PostgreSQL:\
+wget –quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - sudo echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie, trusty or xenial-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list sudo apt-get update sudo apt-get install postgresql-9.6\\
+•	Redis database: LoRa Server stores all non-persistent data into a Redis datastore. Installation on Debian / Ubuntu: sudo apt-get\ install redis-server
+### Installation of LoRa Gateway Bridge:
+ It’s done simply by executing the following command that creates a configuration file is located at /etc/lora-gateway-bridge/lora-gatewaybridge.toml.\
+sudo apt-get install lora-gateway-bridge
+### Configuration
+•	Gateway: Modify the packet-forwarder of the gateway so that it will send its data to the LoRa Gateway Bridge. serveraddress to the IP address / hostname of the LoRa Gateway Bridge servportup to 1700 (the default port that LoRa Gateway Bridge is using) servportdown to 1700 (same)\
+•	The configuration file: entering the packet forwarder’s address which is the same as gateway’s.
+## LoRa network server
+Having the same requirements as the gateway bridge, LoRa Server needs its own database.
+### Postgres database creation
+1.	Starting the prompt: sudo -u postgres psql
+2.	Creating a user: create role loraserverNs with login password ’dbpassword’;
+3.	Creating a database create database loraserverNs with owner loraserverNs;
+### Installing the Network Server
+sudo apt-get install loraserver 
+
+## LoRa application server
+Creating a user, database and a PostgreSQL pqtrgm extension After starting the prompt we entered the following commands:
+1.	Creating a user: create role loraserverAs with login password ’dbpassword’;
+2.	Creating a database create database loraserverAs with owner loraserverAs;
+3.	Changing to the LoRa App Server database: l,oraserverAs
+4.	Enabling the extension: create extension pgtrgm;
+### Installing the Application Server
+sudo apt-get install lora-app-server\
+After installation, modify the configuration file which is located at /etc/lora-app-server/loraapp-server.toml
+
 
 
