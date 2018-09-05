@@ -59,26 +59,30 @@ Creating a user, database and a PostgreSQL pqtrgm extension After starting the p
 ### Installing the Application Server
 sudo apt-get install lora-app-server\
 After installation, modify the configuration file which is located at /etc/lora-app-server/loraapp-server.toml
-
+![image](https://user-images.githubusercontent.com/40475940/45075541-58465500-b0df-11e8-8ea1-e66ab24ee17c.png)
 Given that the password that I used when creating the PostgreSQL database is ’dbpassword’, the config variable postgresql.dsn had to be changed into:\
- 
+ ![image](https://user-images.githubusercontent.com/40475940/45075556-62685380-b0df-11e8-89ac-cdb7233a2713.png)
 Another thing that has to be changed in the name of the node in the uplink topic subsciption. In pour case the node is called 'node' so the code in the configuration file has to look like the screenshot below\
  
-
+![image](https://user-images.githubusercontent.com/40475940/45075613-9a6f9680-b0df-11e8-922a-f68276c667a7.png)
 
 ### The application server’s web interface
 LoRa application server comes with a user-web-interface that enables the management of the different components of the network and that allows the decoding and the visualization of the received data. The following steps lead to the configuration of this interface.
 1. Configuring the bind address TLS certificates and the authentication key
- 
+ ![image](https://user-images.githubusercontent.com/40475940/45075625-a5c2c200-b0df-11e8-805f-cc11b345d4bc.png)
 
-2. Launching the gateway bridge
+2. Launching the gateway bridge\
+![image](https://user-images.githubusercontent.com/40475940/45075637-af4c2a00-b0df-11e8-82fd-da18d0967bed.png)
  
 3.	Launching the loRa network server
- 
+ ![image](https://user-images.githubusercontent.com/40475940/45075651-b96e2880-b0df-11e8-84d7-f0e7f515852b.png)
+
 4.	Launching LoRa application server 
+![image](https://user-images.githubusercontent.com/40475940/45075660-c428bd80-b0df-11e8-8d71-d42141ab525f.png)
 
 5.	Access the configured bind address, in our case it’s: https://52.211.159.35:8080
- 
+ ![image](https://user-images.githubusercontent.com/40475940/45075667-cc80f880-b0df-11e8-8422-65cfbbba8e78.png)
+
 6.	In there, the used gateway’s as well as the device’s information have to be provided, respectively in the ’gateway profiles’ and ’device profiles’ sections showed in the figure above. The used network server with which the application server will deal must be entered in the ’network servers’ section. And in the ’Applications’ section, an application using the mentioned gateway and devices can be made. In the application we can choose to decode using a self developed javascript code or using CayenneLPP schema. In our case the latter one was chosen.
 ## Device provisioning and data’s circulation visualization
 1.	Launching the packet forwarder
