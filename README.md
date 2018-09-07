@@ -64,9 +64,70 @@ After installation, modify the configuration file which is located at /etc/lora-
 Given that the password that I used when creating the PostgreSQL database is ’dbpassword’, the config variable postgresql.dsn had to be changed into:\
  ![image](https://user-images.githubusercontent.com/40475940/45075556-62685380-b0df-11e8-89ac-cdb7233a2713.png)\
 Another thing that has to be changed in the name of the node in the uplink topic subsciption. In pour case the node is called 'node' so the code in the configuration file has to look like the screenshot below\
- 
-![image](https://user-images.githubusercontent.com/40475940/45075613-9a6f9680-b0df-11e8-922a-f68276c667a7.png)
+![image](https://user-images.githubusercontent.com/40475940/45075613-9a6f9680-b0df-11e8-922a-f68276c667a7.png)\
 
+## Security in a LoRaWAN network
+
+In terms of security, the LoRANWAN standard specifies three AES-128 keys:\
+NwkSKey, network session key, which uses exchanges between the terminal and the core network. It ensures the authenticity of devices in calculation and by checking the integrity code of the message, MIC, from the Header cloth and the Payload.\
+AppSKey, Application Session Key, specific to end-device is used to encrypt and decrypt the payload\
+AppKey, application key known only by the application and the final device and which allows to deduce the two previous keys.
+![1](https://user-images.githubusercontent.com/42407959/45169205-61c5df00-b1fd-11e8-94fd-2f88fa602e37.png)
+The application session key is only known by the application provider. It is impossible for a third party, including the operator, to consult the data.
+A frame counter is also used to protect against replay attacks, which would consist of repeating a maliciously intercepted transmission. The counter is incremented with each transmission. The gateway and the end devices reject transmissions whose counter value is less than that present.
+ =>   To be part of a LoRaWAN network, each device must obtain both session keys. This activation step can be done in two ways: Over-The-Air Activation (OTAA) or Activation By Personalization (APB).
+ 
+### Activation By Personalization
+
+In ABP, the NwkSKey session keys, AppSKey and DevAddr device address are directly stored on the end-device. It is then possible to bypass the procedure of join request, join accept.
+NwkSKey and AppSKey must be unique!
+![2](https://user-images.githubusercontent.com/42407959/45242982-78019700-b2f2-11e8-9330-20374b55dd5a.png)
+
+|                  +                                  |                         -                           |
+| ----------------------------------------------------|---------------------------------------------------- |
+|  The device does not need the ability or resources to perform a join procedure.| The generation scheme of NwkSKey and AppSKey must ensure that they are unique, to avoid a widespread violation if only one device is compromise .And the system must be secure to prevent the keys from being obtained or derived by dishonest parties. If the device is compromised at any time, even before activation, the keys can be discovered.Network settings can not be specified at join time.Events that require a key change (for example, moving to a new network, the device being compromised, or expired keys) require reprogramming the device. 
+|The device does not need to decide if a join is needed at any time, as this is never necessary.
+No schema is needed to specify a unique DevEUI or AppKey.|                                     
+ 
+### Over-The-Air Activation
+Radio link activation consists of a "join request" and a "join acceptance" between a terminal and a server.
+<img width="725" alt="3" src="https://user-images.githubusercontent.com/42407959/45243838-8b623180-b2f5-11e8-8301-719d8a33ecd7.png">
+
+#### JOIN REQUEST
+When the activation process starts, an AppKey must be assigned to both devices
+and the network server. The end device should know AppEUI andDevEUI, and should be able to generate its DevNonce.
+AppKey is an AES-128 root key specified for an end device.
+AppEUI is an identifier of an application, while DevEUI is a unique identifier of a terminal. DevNonce is a sequence of random numbers and it is generated
+by emitting a signal strength indicator metric sequence (RSSI)
+and it is supposed to be ideally random.
+When the join procedure begins, it first sends a join request over the air
+The "Join Request" message is not encrypted, but it uses AppKey to generate the message
+Integrity code (MIC) to ensure the integrity of the message.
+
+#### JOIN ACCEPT
+The server network sends a seal acceptance message to each device containing AppNonce (server-generated random value), NetID (network identifier), DevAddr (device identifier), DLSettings (device configuration), RXDelay (The delay between transmission and reception) and CFList which is optional (for channel frequencies). The Join Accept message is encrypted using AppKey instead of the join request message, which can lead to serious security issues. Anyone can know the device ID and the ID of the application to which the device is dedicated. You can also know the DevNonce included in the key generation.
+Then the server transfers the AppSkey to the application server for use in decrypting messages.
+After receiving the acceptance confirmation message, the device decrypts it and generates the session keys using the parameters included in the join acceptance message.
+
+![4](https://user-images.githubusercontent.com/42407959/45243916-d7ad7180-b2f5-11e8-83ea-e4a38f6013cc.png)
+
+#### CHARACTERISTICS OF OTAA
+OTAA provides security mechanisms.
+First, it uses unique parameters. In OTAA, AppKey, DevEUI, AppEUI, AppNonce and
+DevNonce should all be unique between terminals. In this case, compromise a
+Final device does not mean compromising the entire network.
+Secondly, there is a buffer for DevNonce to prevent replay attacks. Each time a new
+join request is received, the server should check the buffer to see if the nuncio has been
+used before If it has been used, the end device is not allowed to join the network.
+In this case, copying a join request and replaying it is not possible.
+
+![5](https://user-images.githubusercontent.com/42407959/45243962-ff9cd500-b2f5-11e8-8ff9-35844b22851e.jpg)
+
+|                  +                                  |                         -                           |
+| ----------------------------------------------------|---------------------------------------------------- |
+Session keys are generated only when necessary, so they can not be compromised before activation.|A schematic is required to pre-program each device with a unique DevEUI and AppKey, as well as the correct AppEUI. The device must support the join function and be able to store the dynamically generated keys.
+If the device goes to a new network, it can reconnect to generate the new keys - rather than having to be reprogrammed.
+Network settings such as RxDelay and CFList can be specified at join.
 # Fiware installation 
 ## Prerequisites :
 ### DOCKER AND DOCKER COMPOSE
@@ -272,7 +333,167 @@ And below, is data stored in to context broker’s database after being translat
 
  
 
+# Security 
+## Replay attack 
+#### ATTACK GOAL
+This attack is designed to achieve spoofing and DoS.
+For the server, the attack goal is to achieve spoofing. After the attack, it will accept
+a malicious replayed message from the attacker’s end device, and the server will believe
+the message is from an accepted working end device.
+For the victim end device, the attack goal is to achieve DoS. After the attack, the message
+that the victim end device sends will not be accepted in the server. The period of
+DoS depends on the selection of replayed message.
+#### ATTACKER CAPABILITIES
+In order to achieve this attack, the attacker should be capable of:
+• having knowledge of the physical payload format of LoRaWAN messages.
+• knowing the wireless communication frequency band of the victim end device.
+• having a device to capture LoRaWAN wireless messages.
+• having a device to send LoRaWAN messages in a certain frequency.
+• storing and reading plaintext of LoRaWAN messages
+If the attacker does not have a specific victimtarget, in a large LoRaWAN network, it will
+not take a long time for an attacker to wait for an overflow. However, if the attacker is
+performing attacks in a relatively small network, it is better if the attack is able to reset
+the victim end device to reduce the waiting time.
+#### ATTACK DESCRIPTION
+![6](https://user-images.githubusercontent.com/42407959/45245178-94560180-b2fb-11e8-97ab-92a9969894d6.png)
+
+##### Attack steps:
+Capture messages. Use a device to capture uplink messages of an ABP activated
+node, and save them into the attacker’s database
+• Get FCnt value. Read the uplink counter value from these messages since counter
+values are not encrypted.
+• Wait till the end device resets or counter overflows.
+• Find a suitable message. Select a captured message with suitable counter value
+from attacker’s database.
+• Replay. Resend the message to the gateway.
+![7](https://user-images.githubusercontent.com/42407959/45245481-e8adb100-b2fc-11e8-8f06-1fccd295b7b3.png)
+
+This attack can be extremely harmful for ABP activated end devices in a large Lo-
+RaWAN network. In a small LoRaWAN network with only a few end devices, the attacker
+may need to wait a long time for a counter overflow. However, in a large LoRaWAN network
+with multiple end devices, the waiting time for any one of the end devices to be
+overflowed is highly decreased. Once the attacker gets the largest possible counter value
+for one end device, it can periodically replay this message, to make the end device be
+rejected permanently. Unless the session keys of the end device are changed, the end
+device cannot be functioning again.
+In addition, if the attacker can find a way to reset the end device (e.g. power outage),
+then there is no need for the attacker to wait for counter overflowing. By resetting the
+end device, and replaying the message with the largest counter value, messages from the
+victim end device will be rejected.
+
+#### Attack-Defense Tree
+![image](https://user-images.githubusercontent.com/42407959/45246058-830ef400-b2ff-11e8-8763-7e9531ed9275.png)
+
+==> Possible countermeasures are the use of frame counters on a network
+level (when re-transmitting frames exactly as they are captured),
+and/or by implementing correct encryption levels.
+
+#### Possible applicability to LoRaWAN
+A replay attack can be performed on any component of a LoRaWAN
+implementation where an adversary can get access to network communication.
+The easiest component for this attack is the wireless network
+communication. All communication between end-devices and
+the Network Server will always pass the wireless network.
+
+If traffic between the Network Server and the gateways, or between
+the Network Server and Application Servers, needs to be replayed,
+then in most cases access to wired networks is required.
+
+Most of the traffic that can be sniffed in a LoRaWAN implementation
+is encrypted. Additional activities are required to get access to the
+real transmitted data (if possible at all). A replay attack is therefore
+not easy. However, there is unencrypted traffic, and maybe there are
+options to replay encrypted data packets.
+
+### Man-in-the-Middle
+In a Man-in-the-Middle (MitM) attack, an adversary places himself
+into a conversation between two parties and impersonates both parties
+to gain access to the data that the two parties are sending to
+each other. It involves an active form of eavesdropping. A man-in-themiddle
+attack allows an adversary to intercept, send and receive data
+meant for someone else, without both parties knowing. This attack is
+a form of session hijacking and is often used in wireless communications.
+
+#### Attack-Defense Tree
+
+In a MitM attack an adversary
+needs to impersonate both the sender and receiver. On behalf of
+both parties, it needs to perform send- and receive activities so that it
+can proxy, or relay, traffic between both parties.
+The main countermeasures for this kind of attack is the use of encryption
+for the data that is being send, and signing of messages so that
+the receiver is sure of the sender’s identity.
+
+![image](https://user-images.githubusercontent.com/42407959/45246277-a9815f00-b300-11e8-8b45-3e92f4fcb4bc.png)
 
 
+#### Possible applicability to LoRaWAN
+A MitM attack can be performed on any component of a LoRaWAN
+implementation where an adversary can get access to network communication.
+The easiest component for this attack, is the wireless network
+communication. All communication between end-devices and
+the Network Server will always pass the wireless network.
+If a MitM attack between the Network Server and the gateways, or between
+the Network Server and Application Servers, is required, then
+in most cases access to wired networks is required.
+Most of the traffic that can be sniffed in a LoRaWAN implementation
+is encrypted. Additional activities are required to get access to the
+real transmitted data (if possible at all). In the LoRaWAN specification,
+network frame counters are defined. Encryption and frame counters
+are successful counter-measures against MitM attacks.
 
+### Denial of Service
+A (Distributed) Denial of Service ((D)DOS) attack is one of the more
+popular attacks nowadays because it can cause great harm with reasonably
+simple efforts. The goal of a (D)DOS attack is to make sure
+that the service under attack becomes unavailable (due to overload)
+for a certain period of time. Usually this is accomplished by exhausting
+resources in the environment that is providing the service.
+During a DOS attack, only one source host is used in the attack. This
+type of attack is not used very much anymore. These days, infrastructure
+providing services can handle a lot of traffic, more traffic than
+can be initiated by a single source host. Because of this, (D)DOS attacks
+have increased in popularity. In this type of attack, the attack is being
+initiated by many different hosts instead of a single one. With the
+rise of botnets, which are virtual networks of hijacked hosts that are
+under control of malicious actors, such (D)DOS attacks have become
+easier and more powerful.
+(D)DOS attacks are usually all about exhausting resources. There are
+two major categories for resource exhaustion during (D)DOS attacks:
+• Exhaustion of network resources: by sending excessive number
+of requests (network packets). Sending excessive amounts of
+network requests can be accomplished by using many source
+hosts, but also by making use of amplification (amplification is
+a way for an adversary to magnify the amount of bandwidth
+they can target at a potential victim; examples are the DNS and
+ICMP protocols).
+• Exhaustion of cpu/memory/disk used by the online application
+processes.
+#### Attack-Defense Tree
+A (D)DOS attack can
+either by a Denial of Service (DOS) or a Distributed Denial of Service
+(DDOS). In case of a DOS only a single host is initiating the attack.
+Because it is only a single host, blocking all traffic from this host can
+be very effective countermeasure. For a (D)DOS attack, an adversary
+needs to have multiple (many) of hosts under control. From all these
+hosts traffic should be initiated towards the target service so that resources
+on the target service become exhausted. Countermeasures
+against a (D)DOS attack are very hard because requests are initiated
+from an enormous number of hosts. It is impossible to distinguish
+between valid and invalid traffic. Usually it turns out that resources
+need to be added so that the target service has more resources than
+the (D)DOS attack can use. However, this is very difficult and costly.
+
+![image](https://user-images.githubusercontent.com/42407959/45246805-a9369300-b303-11e8-9698-b55f6af15915.png)
+
+#### Possible applicability to LoRaWAN
+A (D)DOS attack can be performed on any component of a LoRaWAN
+implementation where an adversary can get access to network communication.
+The most obvious target components within the LoRaWAN
+communication chain would be the end-devices and the Network
+Server.
+For now, it is difficult to determine which type of (D)DOS would be
+the most efficient for the individual LoRaWAN components.
+As mentioned in chapter 3.2.4, Join-Accept messages might be a possible
+type of communication that can be used for (D)DOS attacks.
 
