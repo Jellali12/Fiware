@@ -128,6 +128,47 @@ In this case, copying a join request and replaying it is not possible.
 Session keys are generated only when necessary, so they can not be compromised before activation.|A schematic is required to pre-program each device with a unique DevEUI and AppKey, as well as the correct AppEUI. The device must support the join function and be able to store the dynamically generated keys.
 If the device goes to a new network, it can reconnect to generate the new keys - rather than having to be reprogrammed.
 Network settings such as RxDelay and CFList can be specified at join.
+
+## Securing Lora by generating certificates
+
+Configuration to generate certificates for the LoRa Server project :
+Go installation 
+tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
+export PATH=$PATH:/usr/local/go/bin
+
+CFSSL installation 
+For generating the certificates, cfssl is being used
+go get -u github.com/cloudflare/cfssl/cmd/cfssl
+go get -u github.com/cloudflare/cfssl/cmd/cfssljson
+go get -u github.com/cloudflare/cfssl/cmd/...
+![image](https://user-images.githubusercontent.com/42407959/45265383-50bddd80-b44a-11e8-8aab-e4998dd4d65c.png)
+
+![image](https://user-images.githubusercontent.com/42407959/45265387-603d2680-b44a-11e8-8419-7dd7ae024839.png)
+
+![image](https://user-images.githubusercontent.com/42407959/45265390-66330780-b44a-11e8-95be-d78185ac7f55.png)
+
+#### LoRa Server
+LoRa Server is an open-source network-server, part of the LoRa Server project
+ Configuration file : loraserver.toml 
+(addition of the generated certives + modification of the ports + generation of random bytes for the jwt_secret)
+
+![image](https://user-images.githubusercontent.com/42407959/45265400-9b3f5a00-b44a-11e8-864b-a448c71cc351.png)
+#### LoRa App Server
+LoRa App Server is an open-source application-server, part of the LoRa Server project
+Configuration file : lora-app-server.toml 
+
+![image](https://user-images.githubusercontent.com/42407959/45265414-c629ae00-b44a-11e8-9019-e72d459a6704.png)
+
+![image](https://user-images.githubusercontent.com/42407959/45265425-d0e44300-b44a-11e8-8fce-5126cb8e2a96.png)
+
+
+#### LoRa Gateway Bridge
+LoRa Gateway Bridge abstracts the packet_forwarder protocol into JSON over MQTT
+Configuration file : lora-gateway-bridge.toml
+![image](https://user-images.githubusercontent.com/42407959/45265433-ebb6b780-b44a-11e8-9461-537637bbc378.png)
+
+![image](https://user-images.githubusercontent.com/42407959/45265435-f2ddc580-b44a-11e8-92f5-a2e27a3656c7.png)
+
 # Fiware installation 
 ## Prerequisites :
 ### DOCKER AND DOCKER COMPOSE
@@ -542,6 +583,7 @@ In order to control Data integrity we should visualise them in different steps u
 ![image](https://user-images.githubusercontent.com/42407959/45264951-b0b18580-b444-11e8-8961-08c93862b3ad.png)
 
 and the file ppk
+
 ![image](https://user-images.githubusercontent.com/42407959/45264952-c030ce80-b444-11e8-8229-a97cc536af13.png)
 
 ![image](https://user-images.githubusercontent.com/42407959/45264954-cc1c9080-b444-11e8-908c-6c8d54afb380.png)
@@ -550,13 +592,16 @@ and the file ppk
 ![image](https://user-images.githubusercontent.com/42407959/45264959-d8085280-b444-11e8-8e91-3eba68ade9c3.png)
 
 ![image](https://user-images.githubusercontent.com/42407959/45264960-e2c2e780-b444-11e8-84cb-93458574ef66.png)
+
 ![image](https://user-images.githubusercontent.com/42407959/45265318-39322500-b449-11e8-85af-0d83f8b4cbcd.png)
 
-Open another terminal
+Open another terminal\
 => Monitor Iotagentlora database
+
 ![image](https://user-images.githubusercontent.com/42407959/45265326-5ebf2e80-b449-11e8-9658-9d2d99dde3f4.png)
 
 monitor Orion database (orion-test)
+
 ![image](https://user-images.githubusercontent.com/42407959/45265334-93cb8100-b449-11e8-9520-d5a3a74c6dfc.png)
 ![image](https://user-images.githubusercontent.com/42407959/45265336-a5148d80-b449-11e8-8587-a26f84c2d38b.png)
 
