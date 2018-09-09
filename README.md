@@ -131,16 +131,17 @@ Network settings such as RxDelay and CFList can be specified at join.
 
 ## Securing Lora by generating certificates
 
-Configuration to generate certificates for the LoRa Server project :
-Go installation 
-tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
-export PATH=$PATH:/usr/local/go/bin
+Configuration to generate certificates for the LoRa Server project : \
+Go installation \
+tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz \
+export PATH=$PATH:/usr/local/go/bin \
 
-CFSSL installation 
-For generating the certificates, cfssl is being used
-go get -u github.com/cloudflare/cfssl/cmd/cfssl
-go get -u github.com/cloudflare/cfssl/cmd/cfssljson
-go get -u github.com/cloudflare/cfssl/cmd/...
+CFSSL installation  \
+For generating the certificates, cfssl is being used \
+go get -u github.com/cloudflare/cfssl/cmd/cfssl \
+go get -u github.com/cloudflare/cfssl/cmd/cfssljson \
+go get -u github.com/cloudflare/cfssl/cmd/... \ 
+
 ![image](https://user-images.githubusercontent.com/42407959/45265383-50bddd80-b44a-11e8-8aab-e4998dd4d65c.png)
 
 ![image](https://user-images.githubusercontent.com/42407959/45265387-603d2680-b44a-11e8-8419-7dd7ae024839.png)
