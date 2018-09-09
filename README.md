@@ -148,9 +148,9 @@ go get -u github.com/cloudflare/cfssl/cmd/...
 ![image](https://user-images.githubusercontent.com/42407959/45265390-66330780-b44a-11e8-95be-d78185ac7f55.png)
 
 #### LoRa Server
-LoRa Server is an open-source network-server, part of the LoRa Server project
- Configuration file : loraserver.toml 
-(addition of the generated certives + modification of the ports + generation of random bytes for the jwt_secret)
+LoRa Server is an open-source network-server, part of the LoRa Server project\
+ Configuration file : loraserver.toml \
+(addition of the generated certives + modification of the ports + generation of random bytes for the jwt_secret) \
 
 ![image](https://user-images.githubusercontent.com/42407959/45265400-9b3f5a00-b44a-11e8-864b-a448c71cc351.png)
 #### LoRa App Server
