@@ -497,3 +497,68 @@ the most efficient for the individual LoRaWAN components.
 As mentioned in chapter 3.2.4, Join-Accept messages might be a possible
 type of communication that can be used for (D)DOS attacks.
 
+### EAVESDROPPING
+The attack is designed to compromise the encryption method of LoRaWAN. By sniffing
+the wireless traffic between the gateway and the end device, the attacker can use the
+corresponding relationship between 2 messages with the same counter value to decrypt
+the ciphertext.
+After the attack, the attacker can compromise the confidentiality of the system, and
+obtain sensor data transmitted in the system. If LoRaWAN is used to transmit secret data,
+this attack can cause serious privacy issues.
+#### ATTACKER CAPABILITIES
+In order to performthe attack, the attacker should have the capabilities of:
+• having a LoRaWAN wireless sniffer device to sniff wireless packets.
+• having basic knowledge of end devices such as message type and message format.
+• having a database to store and compare LoRaWAN traffic.
+In order to increase the accuracy of the decryption results, it is better if the attacker also
+has the ability to reset the end devices.
+
+#### ATTACK DESCRIPTION
+
+![image](https://user-images.githubusercontent.com/42407959/45264703-24519380-b441-11e8-95ce-ea996c9c2a58.png)
+
+#### ATTACK STEPS
+The attack can be operated in following steps:
+• The attacker captures and stores LoRaWAN wireless packets, and logs basic information.
+• After resetting, continue to collect packets. Compare packets before and after resetting.
+Pair packets with same counter value.
+• Coding with method crib dragging, see the result.
+the figure shows an example of conducting an eavesdropping attack in a LoRaWAN network.
+A malicious gateway with appropriate frequency can receive messages from end
+device. Pairing the messages before and after resetting with same counter value, we can
+use crib ragging to derive the plaintext. In different cases, the implementation of crib
+dragging can be different. For example, if the plaintexts are sentences in English, it is
+easy to guess. If the plaintexts are numbers, we need to find the regular patterns behind
+the numbers first.
+
+![image](https://user-images.githubusercontent.com/42407959/45264708-49de9d00-b441-11e8-9678-26a6353c8760.png)
+
+# DATA VISUALISATION
+In order to control Data integrity we should visualise them in different steps using MongoDB to know if the totality of the data are sent 
+
+=> we enter the IP address 34.254.184.237
+
+
+![image](https://user-images.githubusercontent.com/42407959/45264951-b0b18580-b444-11e8-8961-08c93862b3ad.png)
+
+and the file ppk
+![image](https://user-images.githubusercontent.com/42407959/45264952-c030ce80-b444-11e8-8229-a97cc536af13.png)
+
+![image](https://user-images.githubusercontent.com/42407959/45264954-cc1c9080-b444-11e8-908c-6c8d54afb380.png)
+
+
+![image](https://user-images.githubusercontent.com/42407959/45264959-d8085280-b444-11e8-8e91-3eba68ade9c3.png)
+
+![image](https://user-images.githubusercontent.com/42407959/45264960-e2c2e780-b444-11e8-84cb-93458574ef66.png)
+![image](https://user-images.githubusercontent.com/42407959/45265318-39322500-b449-11e8-85af-0d83f8b4cbcd.png)
+
+Open another terminal
+=> Monitor Iotagentlora database
+![image](https://user-images.githubusercontent.com/42407959/45265326-5ebf2e80-b449-11e8-9658-9d2d99dde3f4.png)
+
+monitor Orion database (orion-test)
+![image](https://user-images.githubusercontent.com/42407959/45265334-93cb8100-b449-11e8-9520-d5a3a74c6dfc.png)
+![image](https://user-images.githubusercontent.com/42407959/45265336-a5148d80-b449-11e8-8587-a26f84c2d38b.png)
+
+
+
