@@ -163,11 +163,13 @@ Configuration file : lora-app-server.toml
 
 
 #### LoRa Gateway Bridge
-LoRa Gateway Bridge abstracts the packet_forwarder protocol into JSON over MQTT
-Configuration file : lora-gateway-bridge.toml
+LoRa Gateway Bridge abstracts the packet_forwarder protocol into JSON over MQTT \
+Configuration file : lora-gateway-bridge.toml \
+
 ![image](https://user-images.githubusercontent.com/42407959/45265433-ebb6b780-b44a-11e8-9461-537637bbc378.png)
 
 ![image](https://user-images.githubusercontent.com/42407959/45265435-f2ddc580-b44a-11e8-92f5-a2e27a3656c7.png)
+
 
 # Fiware installation 
 ## Prerequisites :
