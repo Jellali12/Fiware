@@ -449,7 +449,7 @@ real transmitted data (if possible at all). A replay attack is therefore
 not easy. However, there is unencrypted traffic, and maybe there are
 options to replay encrypted data packets.
 
-### Man-in-the-Middle
+## Man-in-the-Middle
 In a Man-in-the-Middle (MitM) attack, an adversary places himself
 into a conversation between two parties and impersonates both parties
 to gain access to the data that the two parties are sending to
@@ -486,62 +486,65 @@ real transmitted data (if possible at all). In the LoRaWAN specification,
 network frame counters are defined. Encryption and frame counters
 are successful counter-measures against MitM attacks.
 
-### Denial of Service
-A (Distributed) Denial of Service ((D)DOS) attack is one of the more
-popular attacks nowadays because it can cause great harm with reasonably
-simple efforts. The goal of a (D)DOS attack is to make sure
-that the service under attack becomes unavailable (due to overload)
-for a certain period of time. Usually this is accomplished by exhausting
-resources in the environment that is providing the service.
-During a DOS attack, only one source host is used in the attack. This
-type of attack is not used very much anymore. These days, infrastructure
-providing services can handle a lot of traffic, more traffic than
-can be initiated by a single source host. Because of this, (D)DOS attacks
-have increased in popularity. In this type of attack, the attack is being
-initiated by many different hosts instead of a single one. With the
-rise of botnets, which are virtual networks of hijacked hosts that are
-under control of malicious actors, such (D)DOS attacks have become
-easier and more powerful.
-(D)DOS attacks are usually all about exhausting resources. There are
-two major categories for resource exhaustion during (D)DOS attacks:
-• Exhaustion of network resources: by sending excessive number
-of requests (network packets). Sending excessive amounts of
-network requests can be accomplished by using many source
-hosts, but also by making use of amplification (amplification is
-a way for an adversary to magnify the amount of bandwidth
-they can target at a potential victim; examples are the DNS and
-ICMP protocols).
-• Exhaustion of cpu/memory/disk used by the online application
-processes.
-#### Attack-Defense Tree
-A (D)DOS attack can
-either by a Denial of Service (DOS) or a Distributed Denial of Service
-(DDOS). In case of a DOS only a single host is initiating the attack.
-Because it is only a single host, blocking all traffic from this host can
-be very effective countermeasure. For a (D)DOS attack, an adversary
-needs to have multiple (many) of hosts under control. From all these
-hosts traffic should be initiated towards the target service so that resources
-on the target service become exhausted. Countermeasures
-against a (D)DOS attack are very hard because requests are initiated
-from an enormous number of hosts. It is impossible to distinguish
-between valid and invalid traffic. Usually it turns out that resources
-need to be added so that the target service has more resources than
-the (D)DOS attack can use. However, this is very difficult and costly.
+## Beaconing
+Besides network traffic between end-devices and the network server,
+there is also traffic between end-devices and gateways. A beacon is
+send from gateways to all end-devices on a regular interval for time
+synchronization features and gateway information. The beacon contains
+the time when the beacon was generated/sent. This time is used,
+by the end-device, to calculate the start of the receive slot windows.
+#### Attack Tree
+![image](https://user-images.githubusercontent.com/42407959/45298580-3e56a900-b509-11e8-807f-0e4cf81c0681.png)
 
-![image](https://user-images.githubusercontent.com/42407959/45246805-a9369300-b303-11e8-9698-b55f6af15915.png)
+the figure shows an Attack-Defense Tree (ADT) for three possible replay
+attacks for the beaconing message. Before replay attacks can be
+performed, an eavesdropping attack is required to capture a valid
+and existing Beaconing message.
+ 	
+The first replay attack is performed by re-transmitting the Beaconing
+network frame without any modifications. The impact of this attack is
+difficult to determine. Replaying the beacon immediately will make
+sure the beacon is received in the beacon receive window. However, it
+will contain the same value as an earlier beacon which is received the
+same window. This will lead to the same receive slots and same GPS
+data. When the beacon is replayed at a later beacon receive window,
+then it is unknown how the end-device will respond. If the details
+are processed then this will lead to receives slots in the past, which is
+most probably not accepted by the end-device. \
+The second replay attack is performed by first modifying the Time
+field value before re-transmitting the network frame. This attempt
+may have an impact on the opening of the receive slot windows by
+the end-device. When the receive slot window is too much out-ofsync
+with the real beacon time, the end-device may not be able to
+receive any information anymore (beaconing precise timing, page 54 of
+the LoRaWAN specification).\
+The third replay attack is performed by first modifying the Gateway
+Information field values before re-transmitting the network frame.\
 
-#### Possible applicability to LoRaWAN
-A (D)DOS attack can be performed on any component of a LoRaWAN
-implementation where an adversary can get access to network communication.
-The most obvious target components within the LoRaWAN
-communication chain would be the end-devices and the Network
-Server.
-For now, it is difficult to determine which type of (D)DOS would be
-the most efficient for the individual LoRaWAN components.
-Join-Accept messages might be a possible
-type of communication that can be used for (D)DOS attacks.
+This attempt may have several impacts. First, the end-device might
+think it is in reach (or out-of-reach, depending on the change made)
+of a specific gateway. Depending on the type or function of the enddevice
+this may have an impact on application level. It may also have
+an impact on downlink routing information. The end-device might
+use the beacon information to update the network server with its
+routing details.
 
-### EAVESDROPPING
+## Collisions
+Because wireless networks use a shared media (the air), there is always
+the possibility for collisions. A collision is when two parties start
+sending at exactly the same moment. The result is that both transmissions
+are mixed-up (and thus results into an invalid frame), or that
+the strongest signal pushes away the weaker signal. Since LoRaWAN
+does not know a re-transmission mechanism, the network frame will
+be lost in case of a collision. A form of DOS attack is when a hacker
+can cause collisions on purpose. Using such an attack, an attacker
+would be able to corrupt the transmissions of a legitimate end-device
+(or gateway). Using this attack is difficult, it requires correct timing
+and signal strengths.
+
+
+
+## EAVESDROPPING
 The attack is designed to compromise the encryption method of LoRaWAN. By sniffing
 the wireless traffic between the gateway and the end device, the attacker can use the
 corresponding relationship between 2 messages with the same counter value to decrypt
