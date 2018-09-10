@@ -449,43 +449,6 @@ real transmitted data (if possible at all). A replay attack is therefore
 not easy. However, there is unencrypted traffic, and maybe there are
 options to replay encrypted data packets.
 
-## Man-in-the-Middle
-In a Man-in-the-Middle (MitM) attack, an adversary places himself
-into a conversation between two parties and impersonates both parties
-to gain access to the data that the two parties are sending to
-each other. It involves an active form of eavesdropping. A man-in-themiddle
-attack allows an adversary to intercept, send and receive data
-meant for someone else, without both parties knowing. This attack is
-a form of session hijacking and is often used in wireless communications.
-
-#### Attack-Defense Tree
-
-In a MitM attack an adversary
-needs to impersonate both the sender and receiver. On behalf of
-both parties, it needs to perform send- and receive activities so that it
-can proxy, or relay, traffic between both parties.
-The main countermeasures for this kind of attack is the use of encryption
-for the data that is being send, and signing of messages so that
-the receiver is sure of the sender’s identity.
-
-![image](https://user-images.githubusercontent.com/42407959/45246277-a9815f00-b300-11e8-8b45-3e92f4fcb4bc.png)
-
-
-#### Possible applicability to LoRaWAN
-A MitM attack can be performed on any component of a LoRaWAN
-implementation where an adversary can get access to network communication.
-The easiest component for this attack, is the wireless network
-communication. All communication between end-devices and
-the Network Server will always pass the wireless network.
-If a MitM attack between the Network Server and the gateways, or between
-the Network Server and Application Servers, is required, then
-in most cases access to wired networks is required.
-Most of the traffic that can be sniffed in a LoRaWAN implementation
-is encrypted. Additional activities are required to get access to the
-real transmitted data (if possible at all). In the LoRaWAN specification,
-network frame counters are defined. Encryption and frame counters
-are successful counter-measures against MitM attacks.
-
 ## Beaconing
 Besides network traffic between end-devices and the network server,
 there is also traffic between end-devices and gateways. A beacon is
@@ -542,6 +505,42 @@ would be able to corrupt the transmissions of a legitimate end-device
 (or gateway). Using this attack is difficult, it requires correct timing
 and signal strengths.
 
+## Man-in-the-Middle
+In a Man-in-the-Middle (MitM) attack, an adversary places himself
+into a conversation between two parties and impersonates both parties
+to gain access to the data that the two parties are sending to
+each other. It involves an active form of eavesdropping. A man-in-themiddle
+attack allows an adversary to intercept, send and receive data
+meant for someone else, without both parties knowing. This attack is
+a form of session hijacking and is often used in wireless communications.
+
+#### Attack-Defense Tree
+
+In a MitM attack an adversary
+needs to impersonate both the sender and receiver. On behalf of
+both parties, it needs to perform send- and receive activities so that it
+can proxy, or relay, traffic between both parties.
+The main countermeasures for this kind of attack is the use of encryption
+for the data that is being send, and signing of messages so that
+the receiver is sure of the sender’s identity.
+
+![image](https://user-images.githubusercontent.com/42407959/45246277-a9815f00-b300-11e8-8b45-3e92f4fcb4bc.png)
+
+
+#### Possible applicability to LoRaWAN
+A MitM attack can be performed on any component of a LoRaWAN
+implementation where an adversary can get access to network communication.
+The easiest component for this attack, is the wireless network
+communication. All communication between end-devices and
+the Network Server will always pass the wireless network.
+If a MitM attack between the Network Server and the gateways, or between
+the Network Server and Application Servers, is required, then
+in most cases access to wired networks is required.
+Most of the traffic that can be sniffed in a LoRaWAN implementation
+is encrypted. Additional activities are required to get access to the
+real transmitted data (if possible at all). In the LoRaWAN specification,
+network frame counters are defined. Encryption and frame counters
+are successful counter-measures against MitM attacks.
 
 
 ## EAVESDROPPING
