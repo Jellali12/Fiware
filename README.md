@@ -60,7 +60,7 @@ Creating a user, database and a PostgreSQL pqtrgm extension After starting the p
 ### Installing the Application Server
 sudo apt-get install lora-app-server\
 After installation, modify the configuration file which is located at /etc/lora-app-server/loraapp-server.toml
-![image](https://user-images.githubusercontent.com/40475940/45075541-58465500-b0df-11e8-8ea1-e66ab24ee17c.png)\
+![image](https://user-images.githubusercontent.com/40475940/450751-58465500-b0df-11e8-8ea1-e66ab24ee17c.png)\
 Given that the password that I used when creating the PostgreSQL database is ’dbpassword’, the config variable postgresql.dsn had to be changed into:\
  ![image](https://user-images.githubusercontent.com/40475940/45075556-62685380-b0df-11e8-89ac-cdb7233a2713.png)\
 Another thing that has to be changed in the name of the node in the uplink topic subsciption. In pour case the node is called 'node' so the code in the configuration file has to look like the screenshot below\
@@ -479,8 +479,7 @@ field value before re-transmitting the network frame. This attempt
 may have an impact on the opening of the receive slot windows by
 the end-device. When the receive slot window is too much out-ofsync
 with the real beacon time, the end-device may not be able to
-receive any information anymore (beaconing precise timing, page 54 of
-the LoRaWAN specification).\
+receive any information anymore.\
 The third replay attack is performed by first modifying the Gateway
 Information field values before re-transmitting the network frame.\
 
