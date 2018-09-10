@@ -538,7 +538,7 @@ communication chain would be the end-devices and the Network
 Server.
 For now, it is difficult to determine which type of (D)DOS would be
 the most efficient for the individual LoRaWAN components.
-As mentioned in chapter 3.2.4, Join-Accept messages might be a possible
+Join-Accept messages might be a possible
 type of communication that can be used for (D)DOS attacks.
 
 ### EAVESDROPPING
