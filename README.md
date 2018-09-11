@@ -70,11 +70,22 @@ Another thing that has to be changed in the name of the node in the uplink topic
 
 In terms of security, the LoRANWAN standard specifies three AES-128 keys:\
 NwkSKey, network session key, which uses exchanges between the terminal and the core network. It ensures the authenticity of devices in calculation and by checking the integrity code of the message, MIC, from the Header cloth and the Payload.\
-AppSKey, Application Session Key, specific to end-device is used to encrypt and decrypt the payload\
+AppSKey, Application Session Key, specific to end-device is used to encrypt and decrypt the payload \
 AppKey, application key known only by the application and the final device and which allows to deduce the two previous keys.
+
 ![1](https://user-images.githubusercontent.com/42407959/45169205-61c5df00-b1fd-11e8-94fd-2f88fa602e37.png)
-The application session key is only known by the application provider. It is impossible for a third party, including the operator, to consult the data.
+
+The application session key is only known by the application provider. It is impossible for a third party, including the operator, to consult the data. \
+
+=> We have generated DevEUI ,NwKSKey , AppSKey in Loraserver by opening this link https://34.243.110.137:8080/ then login and password admin admin :\
+
+<img width="791" alt="default" src="https://user-images.githubusercontent.com/42407959/45393475-56731900-b62c-11e8-9efd-56839a91e757.PNG">
+
+<img width="782" alt="uu" src="https://user-images.githubusercontent.com/42407959/45393476-570baf80-b62c-11e8-9ad2-7c833d89eba5.PNG">
+
+
 A frame counter is also used to protect against replay attacks, which would consist of repeating a maliciously intercepted transmission. The counter is incremented with each transmission. The gateway and the end devices reject transmissions whose counter value is less than that present.
+
  =>   To be part of a LoRaWAN network, each device must obtain both session keys. This activation step can be done in two ways: Over-The-Air Activation (OTAA) or Activation By Personalization (APB).
  
 ### Activation By Personalization
