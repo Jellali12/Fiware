@@ -1,14 +1,5 @@
 # Getting started with LoraWAN, loraserver.io
- ## References:
- .LoRa: https://www.lora-alliance.org \
- .LoRa Semtech: http://www.semtech.com/wireless-rf/internet-of-things/ \
- .LoRaWAN Tutorial: http://www.instructables.com/id/Use-Lora-Shield-and-RPi-to-Build-a-LoRaWAN-Gateway/ \
- .Raspbian OS: https://www.raspberrypi.org/downloads/raspbian/ \
- .Single Channel Package Forwarder: https://github.com/tftelkamp/single_chan_pkt_fwd/ \
- .Duty Cycle of LoRa: https://www.thethingsnetwork.org/wiki/LoRaWAN/Duty-Cycle \
- .RFM95 assembly with lora gateway: https://learn.adafruit.com/adafruit-rfm69hcw-and-rfm96-rfm95-rfm98-lora-packet-padio-breakouts/assembly \
- .See also http://cpham.perso.univ-pau.fr/LORA/RPIgateway.html
- ## hardware requirements(gateway and devices)
+  ## hardware requirements(gateway and devices)
   .Raspberry Pi 3\
   .2 RFM95 @868.1 MHz\
   .Arduino Uno R3\
@@ -619,6 +610,16 @@ monitor Orion database (orion-test)
 
 ![image](https://user-images.githubusercontent.com/42407959/45265334-93cb8100-b449-11e8-9520-d5a3a74c6dfc.png)
 ![image](https://user-images.githubusercontent.com/42407959/45265336-a5148d80-b449-11e8-8587-a26f84c2d38b.png)
+
+## References:
+ .LoRa: https://www.lora-alliance.org \
+ .LoRa Semtech: http://www.semtech.com/wireless-rf/internet-of-things/ \
+ .LoRaWAN Tutorial: http://www.instructables.com/id/Use-Lora-Shield-and-RPi-to-Build-a-LoRaWAN-Gateway/ \
+ .Raspbian OS: https://www.raspberrypi.org/downloads/raspbian/ \
+ .Single Channel Package Forwarder: https://github.com/tftelkamp/single_chan_pkt_fwd/ \
+ .Duty Cycle of LoRa: https://www.thethingsnetwork.org/wiki/LoRaWAN/Duty-Cycle \
+ .RFM95 assembly with lora gateway: https://learn.adafruit.com/adafruit-rfm69hcw-and-rfm96-rfm95-rfm98-lora-packet-padio-breakouts/assembly \
+ .See also http://cpham.perso.univ-pau.fr/LORA/RPIgateway.html
 
 
 
