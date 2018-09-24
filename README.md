@@ -1,12 +1,14 @@
 # Project Goal
 Beside of Orange OpenSource project https://github.com/Orange-OpenSource/fiware-openlpwa-iotagent and ATOS Research & Innovation https://github.com/Atos-Research-and-Innovation/IoTagent-LoRaWAN , we are a small students group of Sup'Com Engeneering School http://www.supcom.mincom.tn/Fr/accueil_46_3 with the help of Tritux www.tritux.com and ipnets www.ipnets.com.tn companies 
 
+# Used HW SW 
+dev and test server : Docker on Vmware ESi
+Operation server : 4 cores 16G with public ip address with Docker
+Gateway: Raspberry Pi 3 with RFM95 @868.1 MHz
+devices : Arduino Uno R3 DHT22 humidity and temperature sensor 
+
 # Getting started with LoraWAN, loraserver.io
-  ## hardware requirements(gateway and devices)
-  .Raspberry Pi 3\
-  .2 RFM95 @868.1 MHz\
-  .Arduino Uno R3\
-  .DHT22 humidity and temperature sensor 
+    
   ## Device setup
   .Loading the existing code RedMineAtIpnet/Fiware/cayennlpp.ino into the DHT22 sensor. In order to transmit date to the fiware iot        agent the payload has to be encoded with the Cayenne Low Power Payload (Cayenne LPP) \ 
   .To learn more about the Cayennelpp data model see https://mydevices.com/cayenne/docs/lora/#lora-cayenne-low-power-payload\ \
