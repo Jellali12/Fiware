@@ -2,10 +2,11 @@
 Beside of Orange OpenSource project https://github.com/Orange-OpenSource/fiware-openlpwa-iotagent and ATOS Research & Innovation https://github.com/Atos-Research-and-Innovation/IoTagent-LoRaWAN , we are a small students group of Sup'Com Engeneering School http://www.supcom.mincom.tn/Fr/accueil_46_3 with the help of Tritux www.tritux.com and ipnets www.ipnets.com.tn companies 
 
 # Used HW SW 
-dev and test server : Docker on Vmware ESi
-Operation server : 4 cores 16G with public ip address with Docker
-Gateway: Raspberry Pi 3 with RFM95 @868.1 MHz
-devices : Arduino Uno R3 DHT22 humidity and temperature sensor 
+
+- dev and test server : Docker on Vmware ESi
+- Operation server : 4 cores 16G with public ip address with Docker
+- Gateway: Raspberry Pi 3 with RFM95 @868.1 MHz
+- devices : Arduino Uno R3 DHT22 humidity and temperature sensor 
 
 # Getting started with LoraWAN, loraserver.io
     
