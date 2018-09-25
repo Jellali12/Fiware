@@ -1,6 +1,10 @@
 # Project Goal
 Beside of Orange OpenSource project https://github.com/Orange-OpenSource/fiware-openlpwa-iotagent and ATOS Research & Innovation https://github.com/Atos-Research-and-Innovation/IoTagent-LoRaWAN , we are a small students group of Sup'Com Engeneering School http://www.supcom.mincom.tn/Fr/accueil_46_3 with the help of Tritux www.tritux.com and ipnets www.ipnets.com.tn companies 
 
+# Introduction
+
+Our group is made by six interns. We have a common task to achieve which is the installation of the IoT platform Fiware, which functionalities will be detailed further in this tuorial. Once this latter is in place, each one of us, the six interns, has a personal task within: device management, insuring communications using the LoRaWAN protocol, visualizing the data that circulates in the network and developing security schemes and algorithms for the system to be well protected. 
+
 # Used HW SW 
 
 - dev and test server : Docker on Vmware ESi
